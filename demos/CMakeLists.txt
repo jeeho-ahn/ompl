@@ -16,6 +16,8 @@ if (OMPL_BUILD_DEMOS)
             Boost::program_options)
     endmacro(add_ompl_demo)
 
+    add_ompl_demo(test_dubins testDubins.cpp)
+
     add_ompl_demo(demo_RigidBodyPlanning RigidBodyPlanning.cpp)
     add_ompl_demo(demo_RigidBodyPlanningWithIK RigidBodyPlanningWithIK.cpp)
     add_ompl_demo(demo_RigidBodyPlanningWithControls RigidBodyPlanningWithControls.cpp)

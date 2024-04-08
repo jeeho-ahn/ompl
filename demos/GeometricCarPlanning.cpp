@@ -40,6 +40,8 @@
 #include <ompl/geometric/SimpleSetup.h>
 #include <boost/program_options.hpp>
 
+#include <ompl/geometric/planners/rrt/RRT.h>
+
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
 namespace po = boost::program_options;
@@ -99,13 +101,16 @@ void plan(const ob::StateSpacePtr& space, bool easy)
     }
     ss.setStartAndGoalStates(start, goal);
 
+    auto planner(std::make_shared<og::RRT>(ss.getSpaceInformation()));
+    ss.setPlanner(planner);
+
     // this call is optional, but we put it in to get more output information
-    ss.getSpaceInformation()->setStateValidityCheckingResolution(0.005);
+    ss.getSpaceInformation()->setStateValidityCheckingResolution(0.1);
     ss.setup();
     ss.print();
 
     // attempt to solve the problem within 30 seconds of planning time
-    ob::PlannerStatus solved = ss.solve(30.0);
+    ob::PlannerStatus solved = ss.solve(0.5);
 
     if (solved)
     {
